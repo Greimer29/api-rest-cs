@@ -22,3 +22,4 @@ Route.get('/', () => {
 
 Route.get('users','UserController.index')
 Route.post('users/register','UserController.store')
+Route.post('users/register/login','UserController.login')

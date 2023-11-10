@@ -25,6 +25,14 @@ class UserController {
     return user
   }
 
+  async login({request,auth}){
+    const {email,pass} = request.all()
+    const token = await auth.attempt(email._value,pass._value)
+
+    console.log('est se envio',email._value,pass._value)
+    return token
+  }
+
   async index(){
     return await User.all()
   }
