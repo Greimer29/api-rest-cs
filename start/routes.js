@@ -19,9 +19,10 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
-
-Route.get('users','UserController.index')
-Route.get('users/permises','Permissioncontroller.index').middleware('auth')
-Route.post('users/permises','Permissioncontroller.create').middleware('auth')
-Route.post('users/register','UserController.store')
-Route.post('users/register/login','UserController.login')
+Route.group(()=>{
+Route.get('/','UserController.index')
+Route.get('permises','Permissioncontroller.index')
+Route.post('permises','Permissioncontroller.create')
+Route.post('register','UserController.store')
+Route.post('register/login','UserController.login')
+}).prefix('users')
