@@ -1,5 +1,8 @@
 'use strict'
 
+const auth = require('@adonisjs/auth')
+const Response = require('@adonisjs/framework/src/Response')
+
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
@@ -9,6 +12,8 @@
  */
 
 const Permission = use('App/Models/Permission')
+const User = use('App/Models/User')
+const {format} = require('date-fns')
 
 class PermissionController {
   /**
@@ -21,9 +26,24 @@ class PermissionController {
    * @param {View} ctx.view
    */
   async index ({ auth,request, response, view }) {
-    const user = await auth.getUser()
-    return await user.permissions().fetch()
+    return await Permission.query().where('estado','!=','').with('users').fetch()
   }
+
+  async showAprob () {
+    try {
+      const fAct = new Date()
+      const fechaActualFormateada = format(fAct,'yyyy-MM-dd')
+      return await Permission.query().where('estado','aprobado').where('fecha_salida',fechaActualFormateada).where('usado','=','no usado').with('users').fetch()
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async showDenied () {
+    return await Permission.query().where('estado','=','negado').with('users').fetch()
+  }
+
 
   /**
    * Render a form to be used for creating a new permission.
@@ -36,7 +56,7 @@ class PermissionController {
    */
   async create ({ auth, request, response, view }) {
     const user = await auth.getUser()
-    const {dateL,dateS,timeL,timeS,motive,place,type} = request.all()
+    const {dateL,dateS,timeL,timeS,motive,place,type,state,used} = request.all()
     const permission = new Permission()
     permission.fill({
       fecha_salida:dateS,
@@ -46,10 +66,16 @@ class PermissionController {
       lugar:place,
       motivo:motive,
       tipo:type,
-      estado:'aprobado'
+      estado:state,
+      usado:used
     })
     await user.permissions().save(permission)
-    return await permission
+    return permission
+  }
+
+  async perStudents (){
+    const permissionStudent = await Permission.query().where('estado','=','pendiente').with('users').fetch()
+    return permissionStudent
   }
 
   /**
@@ -73,6 +99,7 @@ class PermissionController {
    * @param {View} ctx.view
    */
   async show ({ params, request, response, view }) {
+    const {} = params
   }
 
   /**
@@ -96,7 +123,23 @@ class PermissionController {
    * @param {Response} ctx.response
    */
   async update ({ params, request, response }) {
+    const {id} = params
+    const {estado} = request.all()
+    const permission = await Permission.find(id)
+    permission.merge({estado})
+    await permission.save()
+    return permission
   }
+
+  async updateUsed ({ params, request, response }) {
+    const {id} = params
+    const {used} = request.all()
+    const permission = await Permission.find(id)
+    permission.merge({usado:used})
+    await permission.save()
+    return permission
+  }
+
 
   /**
    * Delete a permission with id.
@@ -106,8 +149,25 @@ class PermissionController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ auth, params, request, response }) {
+    const user = await auth.getUser()
+    const {id} = params
+    const permission = await Permission.find(id)
+    if(permission == null){
+      return response.json({
+        message:"este permiso ya no existe"
+      })
+    }
+    else if (permission.user_id !== user.id){
+      return response.status(403).json({
+        msg:'usted no esta authorizado'
+      })
+    }
+
+    await permission.delete()
+    return permission
   }
+
 }
 
 module.exports = PermissionController

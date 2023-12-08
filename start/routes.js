@@ -1,5 +1,7 @@
 'use strict'
 
+const { RouteGroup } = require('@adonisjs/framework/src/Route/Manager')
+
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -20,9 +22,23 @@ Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
 Route.group(()=>{
-Route.get('/','UserController.index')
-Route.get('permises','Permissioncontroller.index')
-Route.post('permises','Permissioncontroller.create')
-Route.post('register','UserController.store')
-Route.post('register/login','UserController.login')
+  //usuarios
+  Route.get('/','UserController.index')
+  Route.get('students/','UserController.showStudentsOnly')
+  Route.get('students/permises/:id','UserController.showStudents')
+  Route.get('register/:id','UserController.show')
+  Route.post('register','UserController.store')
+  Route.post('register/login','UserController.login')
+  Route.patch('register/:id','UserController.update')
+  Route.delete('/:id','UserController.destroy')
+  //permisos
+  Route.get('permises','PermissionController.index')
+  Route.get('permises/aproved','PermissionController.showAprob')
+  Route.get('permises/denied','PermissionController.showDenied')
+  Route.get('permises/students','PermissionController.perStudents')
+  Route.patch('students/permises/state/:id','PermissionController.update')
+  Route.patch('students/permises/used/:id','PermissionController.updateUsed')
+  Route.post('permises','Permissioncontroller.create')
+  Route.delete('permises/:id','Permissioncontroller.destroy')
 }).prefix('users')
+
