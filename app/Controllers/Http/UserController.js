@@ -4,24 +4,74 @@ const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
 
 class UserController {
+  async validation({request,response}){
+    const {cod,typeUser} = request.all()
+    if(typeUser == 1){
+      if(cod == 'iunavEDU'){
+        return {
+          userType:'Monitor',
+          validation:true
+        }
+      }else{
+        return {
+          userType:'Unknow',
+          validation:false
+        }
+      }
+    }
+    if(typeUser == 2){
+      if(cod == 'iunavEDU'){
+        return {
+          userType:'Vigilante',
+          validation:true
+        }
+      }else{
+        return {validation:false}
+      }
+    }
+    if(typeUser == 3){
+      if(cod == 456123789){
+        return {
+          userType:'Student',
+          validation:true
+        }
+      }else{
+        return {validation:false}
+      }
+    }
+  }
+
   async store({request}){
-    const {name,lastName,age,ci,carrer,semester,phone,codKey,nroRoom,username,password,email,type} = request.all()
-    const user = await User.create({
-      nombre:name,
-      apellido:lastName,
-      edad:age,
-      cedula:ci,
-      carrera:carrer,
-      semestre:semester,
-      telefono:phone,
-      cod_llave:codKey,
-      nro_habitacion:nroRoom,
-      username,
-      password,
-      email,
-      type
-    })
-    return user
+    const {user} = request.all()
+    if(user.type == 1 || user.type == 2){
+      const {email,password,name,lastName,type} = user
+      const newUser = await User.create({
+        nombre:name,
+        apellido:lastName,
+        password,
+        email,
+        type
+      })
+      return newUser
+    }
+    if(user.type == 3){
+      const {name,lastName,age,ci,carrer,semester,phone,codKey,nroRoom,password,email,type} = user
+      const newUser = await User.create({
+        nombre:name,
+        apellido:lastName,
+        edad:age,
+        cedula:ci,
+        carrera:carrer,
+        semestre:semester,
+        telefono:phone,
+        cod_llave:codKey,
+        nro_habitacion:nroRoom,
+        password,
+        email,
+        type
+      })
+      return newUser
+    }
   }
 
   async show({auth,params,response,request}){

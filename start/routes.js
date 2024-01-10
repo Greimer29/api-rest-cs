@@ -21,6 +21,9 @@ const Route = use('Route')
 Route.get('/', () => {
   return { greeting: 'Hello world in JSON' }
 })
+
+Route.post('user/validation','UserController.validation')
+
 Route.group(()=>{
   //usuarios
   Route.get('/','UserController.index')
@@ -38,6 +41,7 @@ Route.group(()=>{
   Route.get('permises/students','PermissionController.perStudents')
   Route.patch('students/permises/state/:id','PermissionController.update')
   Route.patch('students/permises/used/:id','PermissionController.updateUsed')
+  Route.patch('students/permises/confirmed/:id','PermissionController.confirmed')
   Route.post('permises','Permissioncontroller.create')
   Route.delete('permises/:id','Permissioncontroller.destroy')
 }).prefix('users')

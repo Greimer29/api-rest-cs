@@ -139,6 +139,21 @@ class PermissionController {
     await permission.save()
     return permission
   }
+  async confirmed ({ params, request, response }) {
+    const {id} = params
+    const {salidaFirmed,llegadaFirmed} = request.all()
+    const permission = await Permission.find(id)
+
+    if(salidaFirmed){
+      permission.merge({hora_salida_firmada:salidaFirmed})
+      await permission.save()
+      return permission
+    }else if(llegadaFirmed){
+      permission.merge({hora_llegada_firmada:llegadaFirmed})
+      await permission.save()
+      return permission
+    }
+  }
 
 
   /**

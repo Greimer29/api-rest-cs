@@ -17,6 +17,8 @@ class PermissionSchema extends Schema {
       table.string('tipo',10).notNullable()
       table.string('usado',10)
       table.string('estado',10)
+      table.string('hora_salida_firmada',20)
+      table.string('hora_llegada_firmada',20)
       table.timestamps()
     })
   }
