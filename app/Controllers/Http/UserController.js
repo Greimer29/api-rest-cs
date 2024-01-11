@@ -2,6 +2,7 @@
 
 const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
+const Database = use('Database')
 
 class UserController {
   async validation({request,response}){
@@ -94,15 +95,9 @@ class UserController {
   async destroy ({ auth, params, request, response }) {
     const {id} = params
     const user = await User.find(id)
-    if(user == null || id == null){
-      return response.json({
-        message:"este usuario ya no existe"
-      })
-    }
-    else if (user.id != id){
-      return response.status(403).json({
-        msg:'usted no esta authorizado'
-      })
+
+    if(!user){
+      return {data:'usuario no encontrado'}
     }
 
     await user.delete()
@@ -110,7 +105,7 @@ class UserController {
   }
 
   async showStudentsOnly(){
-    const user = await User.query().where('type','=',2).with('permissions').fetch()
+    const user = await User.query().where('type','=',3).with('permissions').fetch()
     return user
   }
 

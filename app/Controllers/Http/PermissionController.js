@@ -73,7 +73,7 @@ class PermissionController {
     return permission
   }
 
-  async perStudents (){
+  async peticions (){
     const permissionStudent = await Permission.query().where('estado','=','pendiente').with('users').fetch()
     return permissionStudent
   }

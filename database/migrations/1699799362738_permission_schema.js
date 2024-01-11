@@ -7,7 +7,7 @@ class PermissionSchema extends Schema {
   up () {
     this.create('permissions', (table) => {
       table.increments()
-      table.integer('user_id').unsigned().references('id').inTable('users')
+      table.integer('user_id').unsigned().references('id').inTable('users').onDelete('cascade')
       table.specificType('fecha_salida','DATE').notNullable()
       table.specificType('fecha_llegada','DATE')
       table.string('hora_salida').notNullable()

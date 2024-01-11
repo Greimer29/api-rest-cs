@@ -38,7 +38,7 @@ Route.group(()=>{
   Route.get('permises','PermissionController.index')
   Route.get('permises/aproved','PermissionController.showAprob')
   Route.get('permises/denied','PermissionController.showDenied')
-  Route.get('permises/students','PermissionController.perStudents')
+  Route.get('permises/requests','PermissionController.peticions')
   Route.patch('students/permises/state/:id','PermissionController.update')
   Route.patch('students/permises/used/:id','PermissionController.updateUsed')
   Route.patch('students/permises/confirmed/:id','PermissionController.confirmed')
