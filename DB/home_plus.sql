@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2023 a las 16:41:03
+-- Tiempo de generación: 11-01-2024 a las 15:54:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,9 +39,9 @@ CREATE TABLE `adonis_schema` (
 --
 
 INSERT INTO `adonis_schema` (`id`, `name`, `batch`, `migration_time`) VALUES
-(16, '1503250034279_user', 1, '2023-11-28 21:55:08'),
-(17, '1503250034280_token', 1, '2023-11-28 21:55:08'),
-(18, '1699799362738_permission_schema', 1, '2023-11-28 21:55:08');
+(13, '1503250034279_user', 1, '2024-01-11 14:51:15'),
+(14, '1503250034280_token', 1, '2024-01-11 14:51:15'),
+(15, '1699799362738_permission_schema', 1, '2024-01-11 14:51:15');
 
 -- --------------------------------------------------------
 
@@ -61,6 +61,8 @@ CREATE TABLE `permissions` (
   `tipo` varchar(10) NOT NULL,
   `usado` varchar(10) DEFAULT NULL,
   `estado` varchar(10) DEFAULT NULL,
+  `hora_salida_firmada` varchar(20) DEFAULT NULL,
+  `hora_llegada_firmada` varchar(20) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -89,31 +91,21 @@ CREATE TABLE `tokens` (
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `username` varchar(100) NOT NULL,
   `email` varchar(254) NOT NULL,
   `password` varchar(90) NOT NULL,
-  `nombre` varchar(90) NOT NULL,
-  `apellido` varchar(90) NOT NULL,
-  `edad` varchar(20) NOT NULL,
-  `cedula` varchar(10) NOT NULL,
-  `carrera` varchar(80) NOT NULL,
-  `semestre` varchar(10) NOT NULL,
-  `telefono` varchar(15) NOT NULL,
-  `cod_llave` varchar(5) NOT NULL,
-  `nro_habitacion` varchar(5) NOT NULL,
+  `nombre` varchar(90) DEFAULT NULL,
+  `apellido` varchar(90) DEFAULT NULL,
+  `edad` varchar(20) DEFAULT NULL,
+  `cedula` varchar(10) DEFAULT NULL,
+  `carrera` varchar(80) DEFAULT NULL,
+  `semestre` varchar(10) DEFAULT NULL,
+  `telefono` varchar(15) DEFAULT NULL,
+  `cod_llave` varchar(5) DEFAULT NULL,
+  `nro_habitacion` varchar(5) DEFAULT NULL,
   `type` varchar(3) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `users`
---
-
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `nombre`, `apellido`, `edad`, `cedula`, `carrera`, `semestre`, `telefono`, `cod_llave`, `nro_habitacion`, `type`, `created_at`, `updated_at`) VALUES
-(1, 'GreimerKmon', 'Greimer@Admin.com', '$2a$10$OjA6ehNyvQM92rF66rqLl.yGkssej077Bk3RXqCnB0oWV0qgC/4xm', 'Greimer', 'Perez', '22', '28086003', 'Informatica', '5to', '04128332238', 'k-100', '100', '4', '2023-11-28 17:57:23', '2023-11-28 17:57:23'),
-(2, 'JosueR', 'josue@Admin.com', '$2a$10$3Co/GGRnCQAjWEoOdW6PVudlvoSOkA0B99ncNOMQ/if58GdMcGnKW', 'Josue', 'Rondón', '43', '00000000', 'Lic. Administración de Empresas', '2do', '04125632145', 'K-46', '46', '1', '2023-11-28 18:04:47', '2023-11-28 18:04:47'),
-(3, 'VigilanteVigia', 'vigilante@Admin.com', '$2a$10$X6LdDGgAoks2w8ReReq4ae.gbPmd4ihRLYjRVzJoyh3JNKp9pm8Gi', 'Vigilante', 'Vigilante', 'X', 'X', 'X', 'X', 'X', 'X', 'X', '3', '2023-11-28 18:07:09', '2023-11-28 18:07:09');
 
 --
 -- Índices para tablas volcadas
@@ -146,7 +138,6 @@ ALTER TABLE `tokens`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_username_unique` (`username`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
   ADD UNIQUE KEY `users_cedula_unique` (`cedula`);
 
@@ -158,7 +149,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `adonis_schema`
 --
 ALTER TABLE `adonis_schema`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `permissions`
@@ -176,7 +167,7 @@ ALTER TABLE `tokens`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -186,7 +177,7 @@ ALTER TABLE `users`
 -- Filtros para la tabla `permissions`
 --
 ALTER TABLE `permissions`
-  ADD CONSTRAINT `permissions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `permissions_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `tokens`
