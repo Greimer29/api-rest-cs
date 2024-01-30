@@ -45,6 +45,6 @@ Route.group(()=>{
   Route.post('permises','Permissioncontroller.create')
   Route.delete('permises/:id','Permissioncontroller.destroy')
   //
-  Route.post('users/upload/image/:id','UserController.upload')
+  Route.post('upload/image/:id','UserController.upload')
 }).prefix('users')
 
