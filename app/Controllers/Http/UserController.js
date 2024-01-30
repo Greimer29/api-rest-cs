@@ -42,8 +42,9 @@ class UserController {
     }
   }
 
-  async store({request}){
+  async store({request,response}){
     const {user} = request.all()
+
     if(user.type == 1 || user.type == 2){
       const {email,password,name,lastName,type} = user
       const newUser = await User.create({
@@ -71,8 +72,27 @@ class UserController {
         email,
         type
       })
-      return newUser
+      await response.status(200).json({newUser})
     }
+  }
+
+  async upload({request,response,params}){
+    const fotoUser = request.file("image",{
+      types:["image"],
+      size:"2mb"
+    })
+    const user = await User.findOrFail(params.id)
+    const FotoUsername = fotoUser.clientName
+    await fotoUser.move('public/users/avatar',{
+      name: user.id+'_'+FotoUsername,
+      overwrite:true
+    })
+    if(!fotoUser.moved()){
+      return response.status(500).json({error:'no se pudo guardar la foto'})
+    }
+    user.foto_url = user.id+'_'+FotoUsername
+    await user.save()
+    return response.status(200).json(user)
   }
 
   async show({auth,params,response,request}){

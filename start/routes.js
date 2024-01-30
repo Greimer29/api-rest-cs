@@ -44,5 +44,7 @@ Route.group(()=>{
   Route.patch('students/permises/confirmed/:id','PermissionController.confirmed')
   Route.post('permises','Permissioncontroller.create')
   Route.delete('permises/:id','Permissioncontroller.destroy')
+  //
+  Route.post('upload/image/:id','UserController.upload')
 }).prefix('users')
 
