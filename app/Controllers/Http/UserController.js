@@ -79,15 +79,14 @@ class UserController {
       size:"2mb"
     })
     const user = await User.findOrFail(params.id)
-    const FotoUsername = fotoUser.clientName
     await fotoUser.move('public/users/avatar',{
-      name: user.id+'_'+FotoUsername,
+      name: fotoUser.clientName,
       overwrite:true
     })
     if(!fotoUser.moved()){
       return response.status(500).json({error:'no se pudo guardar la foto'})
     }
-    user.foto_url = user.id+'_'+FotoUsername
+    user.foto_url = fotoUser.clientName
     await user.save()
     return response.status(200).json(user)
   }
