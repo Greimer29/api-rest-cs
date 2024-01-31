@@ -14,10 +14,7 @@ class UserController {
           validation:true
         }
       }else{
-        return {
-          userType:'Unknow',
-          validation:false
-        }
+        return response.status(502).json({validation:false})
       }
     }
     if(typeUser == 2){
@@ -27,7 +24,7 @@ class UserController {
           validation:true
         }
       }else{
-        return {validation:false}
+        return response.status(502).json({validation:false})
       }
     }
     if(typeUser == 3){
@@ -37,7 +34,7 @@ class UserController {
           validation:true
         }
       }else{
-        return {validation:false}
+        return response.status(502).json({validation:false})
       }
     }
   }
