@@ -79,7 +79,7 @@ class UserController {
       size:"2mb"
     })
     const user = await User.findOrFail(params.id)
-    await fotoUser.move('public/users/avatar',{
+    await fotoUser.move('public/avatar',{
       name: fotoUser.clientName,
       overwrite:true
     })
