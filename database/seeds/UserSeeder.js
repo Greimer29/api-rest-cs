@@ -13,22 +13,19 @@
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
 const Database = use('Database')
+const User = use('App/Models/User')
 
 class UserSeeder {
   async run () {
-    await Database.table('users').insert([
-      {
-        'foto_url':'greimeravatar.jpg',
-        'email':'Admin@Admin.com',
-        'password':'123456',
-        'nombre':'Admin',
-        'apellido':'Admin',
-        'type':'4'
-      }
-    ])
-  }
-  async aja(){
-    console.log('redy')
+    const newUser = await User.create({
+      foto_url:'greimeravatar.jpg',
+      nombre:'Admin',
+      apellido:'Admin',
+      password:'123',
+      email:'Admin@Admin.com',
+      type:'4'
+    })
+  return newUser
   }
 }
 
