@@ -104,6 +104,19 @@ class UserController {
     return token
   }
 
+  async inDevice({request,params,response}){
+    const {id} = params;
+    const {tokenDevice} = request.all();
+
+    const findUser = await User.find(id)
+    findUser.merge({
+      device_token:tokenDevice
+    })
+
+    await findUser.save()
+    return response.status(200).json({state:'Dispositivo logueado',user:findUser})
+  }
+
   async index(){
     return await User.all()
   }
