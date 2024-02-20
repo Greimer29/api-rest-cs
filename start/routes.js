@@ -41,7 +41,6 @@ Route.group(()=>{
   Route.patch('register/:id','UserController.update')
   //eliminar un usuario
   Route.delete('/:id','UserController.destroy')
-
   //permisos
   //listar todos los permisos generados
   Route.get('permises','PermissionController.index')
