@@ -19,7 +19,6 @@ class UserSchema extends Schema {
       table.string('telefono', 15)
       table.string('cod_llave', 5)
       table.string('nro_habitacion', 5)
-      table.text('device_token')
       table.string('type',3)
       table.timestamps()
     })
