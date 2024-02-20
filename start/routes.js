@@ -41,6 +41,10 @@ Route.group(()=>{
   Route.patch('register/:id','UserController.update')
   //eliminar un usuario
   Route.delete('/:id','UserController.destroy')
+
+  //agregar un dispositivo
+  Route.post('register/device/:id','UserController.inDevice')
+
   //permisos
   //listar todos los permisos generados
   Route.get('permises','PermissionController.index')

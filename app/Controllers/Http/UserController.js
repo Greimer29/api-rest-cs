@@ -75,7 +75,7 @@ class UserController {
   async upload({request,response,params}){
     const fotoUser = request.file("image",{
       types:["image"],
-      size:"2mb"
+      size:"50mb"
     })
     const user = await User.findOrFail(params.id)
     await fotoUser.move('public/avatar',{

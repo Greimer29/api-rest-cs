@@ -1,30 +1,11 @@
 'use strict'
 
-const auth = require('@adonisjs/auth')
-const Response = require('@adonisjs/framework/src/Response')
-
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-
-/**
- * Resourceful controller for interacting with permissions
- */
-
 const Permission = use('App/Models/Permission')
-const User = use('App/Models/User')
 const {format} = require('date-fns')
+const {myFunction} = require('../../FireAdmin/admin.js')
+const User = use('App/Models/User')
 
 class PermissionController {
-  /**
-   * Show a list of all permissions.
-   * GET permissions
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async index ({ auth,request, response, view }) {
     return await Permission.query().where('estado','!=','').with('users').fetch()
   }
@@ -44,17 +25,10 @@ class PermissionController {
     return await Permission.query().where('estado','=','negado').with('users').fetch()
   }
 
-
-  /**
-   * Render a form to be used for creating a new permission.
-   * GET permissions/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async create ({ auth, request, response, view }) {
+    const prece = await User.query().where('type','=',3).fetch()
+    myFunction('cQVEOLzhSGTfk3slhbYT70:APA91bEKvEtSQnyrqB-r9vjnX85dQrdeCy3-d_PwqBbADYIvK0aub6668RUsXiK_uai1i9fmGd_tT18zz8tA9sQutbqT048EYoUideauSGBfIK299GQyHYKRTasadE15mtbWZUdYfdt4')
+    return console.log(prece)
     const user = await auth.getUser()
     const {dateL,dateS,timeL,timeS,motive,place,type,state,used} = request.all()
     const permission = new Permission()
@@ -78,50 +52,6 @@ class PermissionController {
     return permissionStudent
   }
 
-  /**
-   * Create/save a new permission.
-   * POST permissions
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
-  async store ({ request, response }) {
-  }
-
-  /**
-   * Display a single permission.
-   * GET permissions/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async show ({ params, request, response, view }) {
-    const {} = params
-  }
-
-  /**
-   * Render a form to update an existing permission.
-   * GET permissions/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update permission details.
-   * PUT or PATCH permissions/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
     const {id} = params
     const {estado} = request.all()
@@ -155,15 +85,6 @@ class PermissionController {
     }
   }
 
-
-  /**
-   * Delete a permission with id.
-   * DELETE permissions/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ auth, params, request, response }) {
     const user = await auth.getUser()
     const {id} = params
