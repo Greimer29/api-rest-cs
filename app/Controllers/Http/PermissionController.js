@@ -26,9 +26,10 @@ class PermissionController {
   }
 
   async create ({ auth, request, response, view }) {
-    const prece = await User.query().where('type','=',3).fetch()
-    myFunction('cQVEOLzhSGTfk3slhbYT70:APA91bEKvEtSQnyrqB-r9vjnX85dQrdeCy3-d_PwqBbADYIvK0aub6668RUsXiK_uai1i9fmGd_tT18zz8tA9sQutbqT048EYoUideauSGBfIK299GQyHYKRTasadE15mtbWZUdYfdt4')
-    return console.log(prece)
+
+    const prece = await User.findByOrFail('type',1)
+    const {device_token} = prece
+    myFunction(device_token)
     const user = await auth.getUser()
     const {dateL,dateS,timeL,timeS,motive,place,type,state,used} = request.all()
     const permission = new Permission()

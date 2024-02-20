@@ -7,7 +7,7 @@ class AlterUserDeviceTokenSchema extends Schema {
   tableName = 'users'
   up () {
     this.alter(this.tableName, (table) => {
-      table.text('device_token')
+      //table.text('device_token')
     })
   }
 

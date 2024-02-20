@@ -4,7 +4,6 @@ var serviceAccount = require("./homeplusnotify-f6088-firebase-adminsdk-556z1-ad8
 
 module.exports = {
   myFunction(token){
-    console.log('hola')
 
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount)
@@ -14,8 +13,8 @@ module.exports = {
 
     const message = {
       notification : {
-        title:'hola puto',
-        body:'te odio'
+        title:'HomePlus:',
+        body:'Tienes una solicitud de permiso'
       },
       webpush: {
         fcmOptions: {
