@@ -2,7 +2,6 @@
 
 const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
-const Database = use('Database')
 
 class UserController {
   async validation({request,response}){
@@ -89,11 +88,6 @@ class UserController {
     user.foto_url = fotoUser.clientName
     await user.save()
     return response.status(200).json(user)
-  }
-
-  async show({auth,params,response,request}){
-    const auser = await auth.getUser()
-    return auser
   }
 
   async login({request,auth}){
