@@ -29,7 +29,10 @@ class PermissionController {
 
     const prece = await User.findByOrFail('type',1)
     const {device_token} = prece
-    myFunction(device_token)
+    const bodyNotification = 'Tienes una solicitud de permiso'
+
+    myFunction(device_token,bodyNotification)
+
     const user = await auth.getUser()
     const {dateL,dateS,timeL,timeS,motive,place,type,state,used} = request.all()
     const permission = new Permission()
@@ -56,9 +59,19 @@ class PermissionController {
   async update ({ params, request, response }) {
     const {id} = params
     const {estado} = request.all()
+
+    const bodyNotification = 'Su solicitud fue procesada'
+
+
     const permission = await Permission.find(id)
+    const student = await User.findOrFail(permission.user_id)
+    const {device_token} = student
+
     permission.merge({estado})
     await permission.save()
+
+    myFunction(device_token,bodyNotification)
+
     return permission
   }
 
@@ -70,6 +83,7 @@ class PermissionController {
     await permission.save()
     return permission
   }
+
   async confirmed ({ params, request, response }) {
     const {id} = params
     const {salidaFirmed,llegadaFirmed} = request.all()
