@@ -5,9 +5,12 @@ var serviceAccount = require("./homeplusnotify-f6088-firebase-adminsdk-556z1-ad8
 module.exports = {
   myFunction(token){
 
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount)
-    });
+    if (!admin.apps.length) {
+      admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        // Otras configuraciones según sea necesario
+      });
+    }
     // This registration token comes from the client FCM SDKs.
     const registrationToken = token;
 
