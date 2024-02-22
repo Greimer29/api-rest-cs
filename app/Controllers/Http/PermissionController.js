@@ -78,9 +78,15 @@ class PermissionController {
   async updateUsed ({ params, request, response }) {
     const {id} = params
     const {used} = request.all()
+    const bodyNotification = 'La entrada de un estudiante ha sido confirmada'
+
     const permission = await Permission.find(id)
+    const prece = await User.findByOrFail('type',1)
+    const {device_token} = prece
+
     permission.merge({usado:used})
     await permission.save()
+    myFunction(device_token,bodyNotification)
     return permission
   }
 
