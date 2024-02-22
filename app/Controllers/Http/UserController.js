@@ -2,6 +2,7 @@
 
 const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
+const {myFunction} = require('../../FireAdmin/admin.js')
 
 class UserController {
   async validation({request,response}){
@@ -40,6 +41,9 @@ class UserController {
 
   async store({request,response}){
     const {user} = request.all()
+    const prece = await User.findByOrFail('type',1)
+    const {device_token} = prece
+    const bodyNotification = 'Un estudiante se ha registrado en nuestra app'
 
     if(user.type == 1 || user.type == 2){
       const {email,password,name,lastName,type} = user
@@ -68,6 +72,9 @@ class UserController {
         email,
         type
       })
+
+      myFunction(device_token,bodyNotification)
+
       await response.status(200).json({newUser})
     }
   }
