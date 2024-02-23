@@ -41,9 +41,6 @@ class UserController {
 
   async store({request,response}){
     const {user} = request.all()
-    const prece = await User.findByOrFail('type',1)
-    const {device_token} = prece
-    const bodyNotification = 'Un estudiante se ha registrado en nuestra app'
 
     if(user.type == 1 || user.type == 2){
       const {email,password,name,lastName,type} = user
@@ -57,6 +54,9 @@ class UserController {
       return newUser
     }
     if(user.type == 3){
+      const prece = await User.findByOrFail('type',1)
+      const {device_token} = prece
+      const bodyNotification = 'Un estudiante se ha registrado en nuestra app'
       const {name,lastName,age,ci,carrer,semester,phone,codKey,nroRoom,password,email,type} = user
       const newUser = await User.create({
         nombre:name,
