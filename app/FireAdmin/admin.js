@@ -10,7 +10,7 @@ module.exports = class FirebaseAdmin {
    * @param {string} fileName nombre del archivo
    * @returns {Promise<string>} url de la imagen
    */
-  async myFunction(token, theBody) {
+  static async myFunction(token, theBody) {
     if (!admin.apps.length) {
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
