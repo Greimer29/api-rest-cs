@@ -2,7 +2,7 @@
 
 const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
-const { myFunction } = use('AppFireAdmin/admin')
+const { myFunction } = use('App/FireAdmin/admin')
 // import myFunction from '../../FireAdmin/admin.js'
 
 class UserController {
