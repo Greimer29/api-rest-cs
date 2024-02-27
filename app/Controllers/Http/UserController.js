@@ -1,11 +1,11 @@
 'use strict'
 
 const User = use('App/Models/User')
-const Permission = use('App/Models/Permission')
-const {myFunction} = require('../../FireAdmin/admin.js')
+/* const Permission = use('App/Models/Permission')
+const {myFunction} = require('../../FireAdmin/admin.js') */
 
 class UserController {
-  async validation({request,response}){
+  /* async validation({request,response}){
     const {cod,typeUser} = request.all()
     if(typeUser == 1){
       if(cod == 'iunavEDU'){
@@ -116,13 +116,13 @@ class UserController {
 
     await findUser.save()
     return response.status(200).json({state:'Dispositivo logueado',user:findUser})
-  }
+  } */
 
-  async index(){
+  async index() {
     return await User.all()
   }
 
-  async destroy ({ auth, params, request, response }) {
+  /* async destroy ({ auth, params, request, response }) {
     const {id} = params
     const user = await User.find(id)
 
@@ -177,7 +177,7 @@ class UserController {
 
     await user.save()
     return user
-  }
+  } */
 }
 
 module.exports = UserController
