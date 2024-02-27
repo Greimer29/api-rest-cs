@@ -26,11 +26,11 @@ Route.post('user/validation', 'UserController.validation')
 Route.get('users', 'UserController.index')
 
 //endpoints
-Route.group(() => {
+/* Route.group(() => {
   //usuarios
   //Listar todos los usuarios
-  // Route.get('', 'UserController.index')
-  /* //listar solo los que sean estudiantes
+  Route.get('', 'UserController.index')
+  //listar solo los que sean estudiantes
   Route.get('students/','UserController.showStudentsOnly')
   //listar los permisos de los estudiantes
   Route.get('students/permises/:id','UserController.showStudents')
@@ -67,6 +67,6 @@ Route.group(() => {
   Route.delete('permises/:id','PermissionController.destroy')
 
   //al momento de crear un usuario guarda la imagen de usuario
-  Route.post('upload/image/:id','UserController.upload') */
-}).prefix('users')
+  Route.post('upload/image/:id','UserController.upload')
+}).prefix('users') */
 
