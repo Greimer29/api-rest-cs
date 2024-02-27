@@ -23,12 +23,13 @@ Route.get('/', () => {
 })
 
 Route.post('user/validation', 'UserController.validation')
+Route.get('users', 'UserController.index')
 
 //endpoints
 Route.group(() => {
   //usuarios
   //Listar todos los usuarios
-  Route.get('', 'UserController.index')
+  // Route.get('', 'UserController.index')
   /* //listar solo los que sean estudiantes
   Route.get('students/','UserController.showStudentsOnly')
   //listar los permisos de los estudiantes
