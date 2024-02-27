@@ -2,7 +2,8 @@
 
 const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
-const myFunction = use('App/Fireadmin/admin')
+// const myFunction = use('App/Fireadmin/admin')
+const FirebaseAdmin = require("../../FireAdmin/admin");
 // import myFunction from '../../FireAdmin/admin.js'
 
 class UserController {

@@ -2,7 +2,7 @@
 
 const Permission = use('App/Models/Permission')
 const { format } = require('date-fns')
-const { myFunction } = require('../../Fireadmin/admin.js')
+const { myFunction } = require('../../FireAdmin/admin.js')
 const User = use('App/Models/User')
 
 class PermissionController {
