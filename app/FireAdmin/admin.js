@@ -1,10 +1,16 @@
 var admin = require("firebase-admin");
-
 var serviceAccount = require("./homeplusnotify-f6088-firebase-adminsdk-556z1-ad80833cf6.json");
 
-module.exports = {
-  myFunction(token,theBody){
+module.exports = class FirebaseAdmin {
+  constructor() {
+    // this.bucket = storage.bucket(bucketName); // Nombre del bucket
+  }
 
+  /**
+   * @param {string} fileName nombre del archivo
+   * @returns {Promise<string>} url de la imagen
+   */
+  static async myFunction(token, theBody) {
     if (!admin.apps.length) {
       admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
@@ -15,9 +21,9 @@ module.exports = {
     const registrationToken = token;
 
     const message = {
-      notification : {
-        title:'HomePlus',
-        body:theBody
+      notification: {
+        title: 'HomePlus',
+        body: theBody
       },
       webpush: {
         fcmOptions: {
@@ -39,5 +45,3 @@ module.exports = {
       });
   }
 }
-
-/**/
