@@ -2,7 +2,7 @@
 
 const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
-const admin = require('firebase-admin')
+const admin = require("firebase-admin")
 
 const serviceAccount = {
   type: "service_account",
