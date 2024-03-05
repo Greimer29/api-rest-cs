@@ -1,0 +1,43 @@
+version: '3.8'
+
+networks:
+  # Define a custom network named "adonis-net"
+  adonis-net:
+
+services:
+  # AdonisJS app service
+  adonisjs-app:
+    depends_on:
+      - adonis-db
+    build: .
+    ports:
+      - "1101:3333"  # Map container port 3333 to host port 3333 (adjust if needed)
+    volumes:
+      - .:/app  # Mount current directory as /app in the container for code changes
+    environment:
+      DB_CONNECTION: ${DB_CONNECTION}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - adonis-net  # Connect the app service to the custom network
+
+  adonis-db:
+    image: mariadb:10.4
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}  # Contraseña para el usuario root
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}  # Debe coincidir con la contraseña de la aplicación
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    networks:
+      - adonis-net  # Connect the app service to the custom network
+
+# Define volumes for data persistence (optional)
+volumes:
+  mysql_data: {}
