@@ -1,5 +1,5 @@
 var admin = require("firebase-admin");
-var serviceAccount = require("./homeplusnotify-f6088-firebase-adminsdk-556z1-ad80833cf6.json");
+var serviceAccount = require("./homeplus-notify-firebase-admin.json");
 
 module.exports = class FirebaseAdmin {
   constructor() {

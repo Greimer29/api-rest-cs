@@ -2,7 +2,9 @@
 
 const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
-const admin = require("firebase-admin")
+//const admin = require("firebase-admin")
+import { initializeApp  } from "firebase-admin/app"
+import { messaging } from "firebase-admin"
 
 const serviceAccount = {
   type: "service_account",
@@ -54,12 +56,10 @@ class UserController {
   }
 
   message = (token,theBody) => {
-    if (!admin.apps.length) {
-      admin.initializeApp({
+      initializeApp({
         credential: admin.credential.cert(serviceAccount),
         // Otras configuraciones según sea necesario
       });
-    }
     // This registration token comes from the client FCM SDKs.
     const registrationToken = token;
 
@@ -78,7 +78,7 @@ class UserController {
 
     // Send a message to the device corresponding to the provided
     // registration token.
-    admin.messaging().send(message)
+    messaging().send(message)
       .then((response) => {
         // Response is a message ID string.
         console.log('Successfully sent message:', response);
@@ -131,7 +131,7 @@ class UserController {
   async upload({request,response,params}){
     const fotoUser = request.file("image",{
       types:["image"],
-      size:"50mb"
+      size:"10mb"
     })
     const user = await User.findOrFail(params.id)
     await fotoUser.move('public/avatar',{
