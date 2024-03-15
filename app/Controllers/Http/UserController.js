@@ -3,8 +3,10 @@
 const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
 //const admin = require("firebase-admin")
-import { initializeApp  } from "firebase-admin/app"
-import { messaging } from "firebase-admin"
+const {initializeApp} = require('firebase-admin/app')
+const {messaging} = require('firebase-admin')
+//import { initializeApp  } from "firebase-admin/app"
+//import { messaging } from "firebase-admin"
 
 const serviceAccount = {
   type: "service_account",
