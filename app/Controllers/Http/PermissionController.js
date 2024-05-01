@@ -58,19 +58,25 @@ class PermissionController {
     return await Permission.query().where('estado','!=','').with('users').fetch()
   }
 
-  async showAprob() {
+  async showAprob( {response}) {
     try {
       const fAct = new Date()
       const fechaActualFormateada = format(fAct, 'yyyy-MM-dd')
       return await Permission.query().where('estado', 'aprobado').where('fecha_salida', fechaActualFormateada).where('usado', '=', 'no usado').with('users').fetch()
 
     } catch (error) {
-      console.log(error)
+      return response.json({data:'No se encontraron permisos'})
     }
   }
 
   async showDenied() {
-    return await Permission.query().where('estado', '=', 'negado').with('users').fetch()
+    try{
+      const fAct = new Date()
+      const fechaActualFormateada = format(fAct, 'yyyy-MM-dd')
+      return await Permission.query().where('estado', 'negado').where('fecha_salida', fechaActualFormateada).with('users').fetch()
+    } catch (error) {
+      return response.json({data:'No se encontraron permisos'})
+    }
   }
 
   async create({ auth, request, response, view }) {

@@ -3,6 +3,8 @@
 const User = use('App/Models/User')
 const Permission = use('App/Models/Permission')
 const admin = require("firebase-admin")
+const fs = require('fs/promises');
+const path = require('path');
 
 
 const serviceAccount = {
@@ -178,6 +180,18 @@ class UserController {
 
     if(!user){
       return {data:'usuario no encontrado'}
+    }
+
+    const imagePath = path.resolve(__dirname, '../public', 'avatars', user.avatar);
+
+    try {
+      // Verificar si la imagen existe
+      await fs.access(imagePath);
+      // Si la imagen existe, eliminarla
+      await fs.unlink(imagePath);
+    } catch (error) {
+      // Si hay un error al acceder o eliminar la imagen, manejarlo aquí
+      console.error('Error al eliminar la imagen:', error);
     }
 
     await user.delete()
