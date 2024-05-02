@@ -168,15 +168,13 @@ class PermissionController {
       return response.json({
         message: "este permiso ya no existe"
       })
-    }
-    else if (permission.user_id !== user.id) {
-      return response.status(403).json({
-        msg: 'usted no esta authorizado'
+    } else {
+      await permission.delete()
+      return response.status(202).json({
+        msg: 'Permiso borrado exitosamente',
+        data: permission
       })
     }
-
-    await permission.delete()
-    return permission
   }
 
 }
