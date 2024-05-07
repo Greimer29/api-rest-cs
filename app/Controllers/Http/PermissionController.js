@@ -161,7 +161,6 @@ class PermissionController {
   }
 
   async destroy({ auth, params, request, response }) {
-    const user = await auth.getUser()
     const { id } = params
     const permission = await Permission.find(id)
     if (permission == null) {
