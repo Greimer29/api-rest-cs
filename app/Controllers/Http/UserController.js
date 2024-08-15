@@ -182,9 +182,9 @@ class UserController {
       return {data:'usuario no encontrado'}
     }
 
-    const imagePath = path.resolve(__dirname, '../public', 'avatars', user.avatar);
 
-    try {
+    /*try {
+      const imagePath = path.resolve(__dirname, '../public', 'avatars', user.avatar);
       // Verificar si la imagen existe
       await fs.access(imagePath);
       // Si la imagen existe, eliminarla
@@ -192,10 +192,15 @@ class UserController {
     } catch (error) {
       // Si hay un error al acceder o eliminar la imagen, manejarlo aquí
       console.error('Error al eliminar la imagen:', error);
-    }
+    }*/
+try {
 
-    await user.delete()
-    return user
+  await user.delete()
+  return user
+} catch (error) {
+
+  return response.json({error:error})
+}
   }
 
   async showStudentsOnly(){
